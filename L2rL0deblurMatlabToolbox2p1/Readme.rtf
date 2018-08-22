@@ -1,0 +1,113 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red26\green26\blue26;\red38\green38\blue38;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww15000\viewh12600\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs40 \cf0  Madrid, June 19, 2018.\
+\
+===================================\
+L2-relaxed L0 deblurring Matlab Toolbox v2.1 \
+===================================\
+\
+Thank you for your interest in this research code.\
+\
+Following an already long tradition of my collaborators and I of making the source code of our image processing methods available to the whole world, here you can find a Matlab software package accompanying the journal paper: 
+\b \cf2 \expnd0\expndtw0\kerning0
+"Efficient and Robust Image Restoration using Multiple-Feature L2-relaxed Sparse Analysis Priors\'94, by Javier Portilla, Antonio Trist\'e1n-Vega and Ivan W. Selesnick
+\b0 , \cf0 \kerning1\expnd0\expndtw0 published in 
+\b IEEE Transactions on Image Processing vol 24(12) pp. 5046-5059
+\b0  (
+\b DOI \cf3 \expnd0\expndtw0\kerning0
+10.1109/TIP.2015.2478405
+\b0 ).\cf0 \kerning1\expnd0\expndtw0  Please, refer the above article and the name of this package when documenting its use in your academic/research activity. \
+\
+Changes with respect to 2.0 version\
+===========================\
+\
+1- Correcting minor mistakes of the core function\'92s header.\
+2- Adding (LB,UB) as input parameters of the core function, indicating respectively the lower and upper bound of the admissible values for the image.\
+3- Now it displays a message indicating the current iteration and the total number of iterations during the deconvolution.\
+\
+\'97\
+\
+The package has several components, each organized as a separate subfolder:\
+\
+\
+(A) Core\
+=======\
+\
+1) \'93deblur_L2relaxedL0.m\'94\
+The core function performing the deblurring. It uses the three described representations.\
+\
+2) \'93compute_results_deblur.m\'94\
+A function which, given a set of deblurring parameters, a set of degradation parameters, and a set of  original uncorrupted test images, measures the overall quality for a given metric (MSER or SSIM), by simulating blur plus noise, and restoring the images using \'93deblur_L2relaxedL0.m\'94.\
+\
+3) \'93optimize_params.m\'94\
+It uses \'93compute_results_deblur.m\'94 in an optimization loop for, given a set of training uncorrupted images, a quality criterion (MSER or SSIM) and a set of degradation scenarios, optimize the deblurring parameters of the method to maximize the average obtained quality.\
+\
+\
+(B) Demo\
+=======\
+\
+A few scripts intended to show how to use the core functions and to demonstrate the reproducibility of the results shown in the article.\
+\
+1) \'93tableIII_demo.m\'94\
+Obtaining the results shown in Table III, for the Condy10 (10 iterations) and Static (50 iterations, beta = 1) cases .\
+\
+2) \'93fig5_demo.m\'94\
+Applying the method according to Figure 5 (two experiments, one with cameraman, high blur and little noise, and one with Barbara, medium-high blur and high noise).\
+\
+\
+(C) Image representations\
+====================\
+\
+As described in the paper, our algorithm can use simultaneously several representations capturing complementary image features. In our article we describe its implementation using three representations:\
+\
+1) Translation Invariant Laplacian Separable transform (TILs)\
+\
+Build upon an orthogonal basis of very small kernels (3 x 3), the TILs is a redundant representation which allows to detect edges and bars along vertical and horizontal directions. It also detects corners and diagonal features (mixing the two diagonals). It allows to choose including the low pass residual (in which case is a tight frame), or not including it (it is not necessary for deblurring, see the article), in which case the deblurring is slightly faster. We use here a single scale. My implementation uses the functions \'93pyrBand.m\'94 and \'93pyrBandIndices.m\'94 from the MatlabPyrTools of Prof. Eero Simoncelli (New York University), which help to organize the coefficients into sub-bands, etc.\
+\
+2) 2D Dual-Tree Complex Wavelet Transform (DT CWT)\
+\
+A highly successful complex wavelet representation (from Prof. Nick Kingsbury, University of Cambridge, UK, and collaborators), having 6 orientations, none of them the vertical, horizontal or 45-135\'ba diagonal. Kernels slightly larger than those of TILs, and a little more selective in the frequency domain. It is a pyramid (multi-resolution). We use here 3 scales. Matlab functions belong to the package \'93DTCWT Toolbox 4.3\'94. Only the required functions have been copied here.\
+\
+3) Local Discrete Cosine Transform (LDCT)\
+\
+Obtaining a sparse representation of quasi-regular textures can be done by using a local Fourier domain representation, like the LDCT. I have built a frame made of the 2D DCT of overlapping blocks. For the article we have chosen 16 x 16 blocks, half overlapping along each dimension.\
+\
+\
+(D) Images\
+=========\
+\
+Training images and test images used in our article.\
+\
+\
+(E) Metric functions\
+===============\
+\
+Matlab functions for measuring how similar are two images. SNR, PSNR and SSIM (Structural Similarity Index Measurement, from Prof. Zhou Wang, University of Waterloo, Canada, and collaborators).\
+\
+\
+In the main directory, there is this \'93Readme.rft\'94 description file.\
+\
+Prior to execute the demos, you should copy all the decompressed package in your disk, and include all the involved paths in Matlab\'92s path (you may want to use the \'93Add with subfolders\'94 add path option, and add only the parent folder).\
+\
+\
+Copyright note\
+===========\
+\
+This L2-relaxed L0 deblurring Matlab software package can be freely downloaded from its original URLs (see https://www.researchgate.net/publication/282046488_Efficient_and_Robust_Image_Restoration_Using_Multiple-Feature_L2-Relaxed_Sparse_Analysis_Priors), or from other non-commercial (mainly, academic) ftp repositories. This package can be used and modified for teaching and research (non-commercial) purposes. Any shared document or program, based on, making use of, or including, this code, or a part of it, must explicitly refer to the original source. The documentation of any derived code should clearly state which parts of the code belong to this package and, if any, which have been modified, and in which sense. If you, your company or your Institution are interested in a potentially profitable or govern-based (e.g., commercial, industrial, militar, etc.) use of our original methods implemented in this source code, please contact me.\
+\
+Comments (on bugs, compatibility issues, experimental extensions of the original code, etc.) are all very welcome. Enjoy it!\
+\
+Javier Portilla.\
+\
+\
+javier.portilla@csic.es\
+Programmer of this code. \
+First author and corresponding author of the associate article.\
+Tenured Senior Scientist, at the Instituto de Optica, Madrid\
+Consejo Superior de Investigaciones Cient\'edficas (CSIC)\
+\
+}
