@@ -33,6 +33,8 @@ It can be used in different problems when doing deconvolution, like:
 |L2rL0deblurMatlabToolbox2p1/	| folder with the [L2-r-L0deblur toolbox version 2.1](https://www.researchgate.net/publication/325903515_L2rL0deblurMatlabToolbox2p1)|
 |README.pdf		   |	this file|
 
+<br/>
+
 ## Important Notes
 - To try the algorithm on
   - all ICIP2014 demos, run *demos/ICIP2014/ICIP2014.m* with proper changes of set up parameters. For details of parameter setting please see the script's comments.
@@ -58,6 +60,8 @@ as "**MLE**" or "**MLI**", for Maximum-Likelihood Extension or Interpolation*), 
   - We have observed some differences running in different computers with diverse operating systems and/or MATLAB versions.
   - Some SPA experiments may be sensitive to these differences (like when dealing with heavy blur and low noise).
 
+<br/>
+
 ## Copyright and License
 
 **Copyright (c) 2018** <br/>
@@ -70,5 +74,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU Affero General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+<br/>
 
 **Thank you for your interest in this code. Comments (on bugs, compatibility issues, experimental extensions of the original code, etc.) are all very welcome. Enjoy it!**
